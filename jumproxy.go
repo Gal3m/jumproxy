@@ -105,8 +105,12 @@ func handleinputs() {
 		tmps := strings.Join(addresses, " ")
 		add = strings.Fields(tmps)
 		if len(add) == 2 {
-			destIP, err = parseInput(add[0])
-			if err != nil {
+			input_address := add[0]
+			if input_address == "localhost" {
+				input_address = "0.0.0.0"
+			}
+			destIP = net.ParseIP(input_address)
+			if destIP == nil {
 				log.Println("Invalid address detect!")
 				os.Exit(1)
 			}
